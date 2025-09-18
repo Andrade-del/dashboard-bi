@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Inteligência de Negócios</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <h2>BI Dashboard</h2>
+            </div>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active" data-page="home">Início</a>
+                <a href="#dashboard" class="nav-link" data-page="dashboard">Dashboard</a>
+                <a href="#data-entry" class="nav-link" data-page="data-entry">Entrada de Dados</a>
+            </nav>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- HOME PAGE -->
+        <section id="home" class="page active">
+            <div class="hero-section">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1>Dashboard de Análise de Oportunidades</h1>
+                        <p>Plataforma completa para análise de dados de negócios com visualizações interativas e atualizações em tempo real.</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn--primary btn--lg" data-page="dashboard">Ver Dashboard</button>
+                            <button class="btn btn--outline btn--lg" data-page="data-entry">Adicionar Dados</button>
+                        </div>
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-card card">
+                            <div class="card__body">
+                                <div class="feature-icon">📊</div>
+                                <h3>Visualizações Interativas</h3>
+                                <p>Gráficos dinâmicos com mapas mundiais, gráficos de barras, linhas e pizza com filtros em tempo real.</p>
+                            </div>
+                        </div>
+                        <div class="feature-card card">
+                            <div class="card__body">
+                                <div class="feature-icon">📱</div>
+                                <h3>Design Responsivo</h3>
+                                <p>Interface otimizada para desktop, tablet e mobile com experiência consistente em todos os dispositivos.</p>
+                            </div>
+                        </div>
+                        <div class="feature-card card">
+                            <div class="card__body">
+                                <div class="feature-icon">📁</div>
+                                <h3>Upload de Dados</h3>
+                                <p>Carregue arquivos Excel ou insira dados manualmente através de formulários intuitivos.</p>
+                            </div>
+                        </div>
+                        <div class="feature-card card">
+                            <div class="card__body">
+                                <div class="feature-icon">🔄</div>
+                                <h3>Atualizações Dinâmicas</h3>
+                                <p>Dashboard atualiza automaticamente conforme novos dados são adicionados ou filtros são aplicados.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD PAGE -->
+        <section id="dashboard" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Dashboard Interativo</h1>
+                    <p>Análise completa de oportunidades de negócios com filtros dinâmicos</p>
+                </div>
+
+                <!-- Filters Section -->
+                <div class="filters-section card">
+                    <div class="card__header">
+                        <h3>Filtros</h3>
+                        <button class="btn btn--outline btn--sm" id="clearFilters">Limpar Filtros</button>
+                    </div>
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <label for="countryFilter">País/Região:</label>
+                            <select id="countryFilter" class="filter-select">
+                                <option value="">Todos</option>
+                                <option value="USA">USA</option>
+                                <option value="UK">UK</option>
+                                <option value="DE">DE</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="industryFilter">Indústria:</label>
+                            <select id="industryFilter" class="filter-select">
+                                <option value="">Todas</option>
+                                <option value="CMT">CMT</option>
+                                <option value="HPS">HPS</option>
+                                <option value="RES">RES</option>
+                                <option value="FS">FS</option>
+                                <option value="PRD">PRD</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="stageFilter">Estágio:</label>
+                            <select id="stageFilter" class="filter-select">
+                                <option value="">Todos</option>
+                                <option value="Canceled">Cancelado</option>
+                                <option value="0A">0A</option>
+                                <option value="1">1</option>
+                                <option value="Won">Ganho</option>
+                                <option value="2B">2B</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="fyFilter">Ano Fiscal:</label>
+                            <select id="fyFilter" class="filter-select">
+                                <option value="">Todos</option>
+                                <option value="FY25">FY25</option>
+                                <option value="FY26">FY26</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPIs Section -->
+                <div class="kpis-section">
+                    <div class="kpi-card card">
+                        <div class="card__body">
+                            <div class="kpi-value" id="totalOpportunities">0</div>
+                            <div class="kpi-label">Total de Oportunidades</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card card">
+                        <div class="card__body">
+                            <div class="kpi-value" id="totalRevenue">$0</div>
+                            <div class="kpi-label">Receita Total Estimada</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card card">
+                        <div class="card__body">
+                            <div class="kpi-value" id="avgRevenue">$0</div>
+                            <div class="kpi-label">Receita Média</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card card">
+                        <div class="card__body">
+                            <div class="kpi-value" id="winRate">0%</div>
+                            <div class="kpi-label">Taxa de Sucesso</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Grid -->
+                <div class="charts-grid">
+                    <!-- World Map -->
+                    <div class="chart-container card">
+                        <div class="card__header">
+                            <h3>Distribuição Geográfica</h3>
+                        </div>
+                        <div class="card__body">
+                            <div id="worldMap" class="world-map-container">
+                                <!-- SVG World Map will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Industry Chart -->
+                    <div class="chart-container card">
+                        <div class="card__header">
+                            <h3>Distribuição por Indústria</h3>
+                        </div>
+                        <div class="card__body">
+                            <canvas id="industryChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Stage Chart -->
+                    <div class="chart-container card">
+                        <div class="card__header">
+                            <h3>Distribuição por Estágio</h3>
+                        </div>
+                        <div class="card__body">
+                            <canvas id="stageChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Revenue Trend Chart -->
+                    <div class="chart-container card">
+                        <div class="card__header">
+                            <h3>Tendência de Receita</h3>
+                        </div>
+                        <div class="card__body">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Table -->
+                <div class="table-section card">
+                    <div class="card__header">
+                        <h3>Dados Detalhados</h3>
+                        <div class="table-controls">
+                            <input type="text" id="tableSearch" class="search-input" placeholder="Buscar...">
+                            <button class="btn btn--outline btn--sm" id="exportData">Exportar CSV</button>
+                        </div>
+                    </div>
+                    <div class="card__body">
+                        <div class="table-container">
+                            <table id="dataTable" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th data-sort="Customer">Cliente</th>
+                                        <th data-sort="Title">País</th>
+                                        <th data-sort="Industry">Indústria</th>
+                                        <th data-sort="Stage">Estágio</th>
+                                        <th data-sort="Estimated Revenue">Receita Est.</th>
+                                        <th data-sort="Technology">Tecnologia</th>
+                                        <th data-sort="Type of Deal">Tipo</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody">
+                                    <!-- Data will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-pagination">
+                            <div class="pagination-info">
+                                Mostrando <span id="showingStart">0</span>-<span id="showingEnd">0</span> de <span id="totalRecords">0</span> registros
+                            </div>
+                            <div class="pagination-controls">
+                                <button id="prevPage" class="btn btn--outline btn--sm">Anterior</button>
+                                <span id="pageInfo">Página 1 de 1</span>
+                                <button id="nextPage" class="btn btn--outline btn--sm">Próximo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DATA ENTRY PAGE -->
+        <section id="data-entry" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Entrada de Dados</h1>
+                    <p>Adicione novos dados via upload de arquivo Excel ou formulário manual</p>
+                </div>
+
+                <div class="data-entry-grid">
+                    <!-- File Upload Section -->
+                    <div class="upload-section card">
+                        <div class="card__header">
+                            <h3>Upload de Arquivo Excel</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="upload-area" id="uploadArea">
+                                <div class="upload-icon">📁</div>
+                                <p>Arraste e solte seu arquivo Excel aqui</p>
+                                <p class="upload-subtext">ou</p>
+                                <button class="btn btn--primary" id="selectFile">Selecionar Arquivo</button>
+                                <input type="file" id="fileInput" accept=".xlsx,.xls" style="display: none;">
+                                <p class="upload-hint">Formatos aceitos: .xlsx, .xls (Máx: 10MB)</p>
+                            </div>
+                            <div class="upload-progress" id="uploadProgress" style="display: none;">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progressFill"></div>
+                                </div>
+                                <p class="progress-text" id="progressText">Processando arquivo...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Manual Form Section -->
+                    <div class="form-section card">
+                        <div class="card__header">
+                            <h3>Entrada Manual de Dados</h3>
+                        </div>
+                        <div class="card__body">
+                            <form id="dataEntryForm" class="data-form">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="fyInput">Ano Fiscal:</label>
+                                        <select id="fyInput" name="FY" required>
+                                            <option value="">Selecionar</option>
+                                            <option value="FY25">FY25</option>
+                                            <option value="FY26">FY26</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="typeOppInput">Tipo de Oportunidade:</label>
+                                        <select id="typeOppInput" name="Type Opp" required>
+                                            <option value="">Selecionar</option>
+                                            <option value="RFP">RFP</option>
+                                            <option value="RFI">RFI</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="titleInput">País/Região:</label>
+                                        <select id="titleInput" name="Title" required>
+                                            <option value="">Selecionar</option>
+                                            <option value="USA">USA</option>
+                                            <option value="UK">UK</option>
+                                            <option value="DE">DE</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="oppIdInput">ID da Oportunidade:</label>
+                                        <input type="text" id="oppIdInput" name="Opp ID" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="customerInput">Cliente:</label>
+                                        <input type="text" id="customerInput" name="Customer" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="stageInput">Estágio:</label>
+                                        <select id="stageInput" name="Stage" required>
+                                            <option value="">Selecionar</option>
+                                            <option value="0A">0A</option>
+                                            <option value="1">1</option>
+                                            <option value="2B">2B</option>
+                                            <option value="Won">Won</option>
+                                            <option value="Canceled">Canceled</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="industryInput">Indústria:</label>
+                                        <select id="industryInput" name="Industry" required>
+                                            <option value="">Selecionar</option>
+                                            <option value="CMT">CMT</option>
+                                            <option value="HPS">HPS</option>
+                                            <option value="RES">RES</option>
+                                            <option value="FS">FS</option>
+                                            <option value="PRD">PRD</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="amountInput">Valor Estimado:</label>
+                                        <input type="text" id="amountInput" name="Estimated Amount" placeholder="USD 100k">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="revenueInput">Receita Estimada:</label>
+                                        <input type="number" id="revenueInput" name="Estimated Revenue" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="technologyInput">Tecnologia:</label>
+                                        <select id="technologyInput" name="Technology" required>
+                                            <option value="">Selecionar</option>
+                                            <option value="Custom">Custom</option>
+                                            <option value="Oracle">Oracle</option>
+                                            <option value="SAP">SAP</option>
+                                            <option value="Data&AI">Data&AI</option>
+                                            <option value="Custom;#Data&AI">Custom + Data&AI</option>
+                                            <option value="Oracle;#Custom">Oracle + Custom</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="dealTypeInput">Tipo de Negócio:</label>
+                                        <select id="dealTypeInput" name="Type of Deal" required>
+                                            <option value="">Selecionar</option>
+                                            <option value="SI">SI</option>
+                                            <option value="AMS">AMS</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group form-group--full">
+                                        <label for="descriptionInput">Descrição:</label>
+                                        <textarea id="descriptionInput" name="Description" rows="3" placeholder="Detalhes sobre a oportunidade..."></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn--outline" id="resetForm">Limpar</button>
+                                    <button type="submit" class="btn btn--primary">Adicionar Dados</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Dashboard BI. Desenvolvido para análise de oportunidades de negócios.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
